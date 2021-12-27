@@ -1,0 +1,8 @@
+
+.env
+*.ipynb
+Portland_Administrative_Sextants.cpg
+Portland_Administrative_Sextants.dbf
+Portland_Administrative_Sextants.prj
+Portland_Administrative_Sextants.shp
+Portland_Administrative_Sextants.shx
