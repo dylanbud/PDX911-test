@@ -19,14 +19,15 @@ def create_app():
     def index():
         start_coords = (45.514811, -122.679109)
         folium_map = folium.Map(location=start_coords, zoom_start=14)
-        df_pdx = initialize_df()
+        df_pdx = pd.read_csv('tweets.csv')
         return folium_map._repr_html_()
 
     @app.route('/update')
     def update():
         '''update the map'''
         #df = update_df()
-        df_pdx = initialize_df()
+        #df_pdx = initialize_df()
+        df_pdx = pd.read_csv('tweets.csv')
         start_coords = (45.514811, -122.679109)
         folium_map = folium.Map(location=start_coords, zoom_start=14)
         more_markers(folium_map, df_pdx, color = 'red', icon='info')
