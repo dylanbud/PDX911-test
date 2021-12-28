@@ -1,1 +1,1 @@
-web: gunicorn app:APP -t 120
+web: gunicorn pdx911:APP -t 120
