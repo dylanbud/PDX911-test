@@ -37,7 +37,7 @@ def update_df():
         )
 
     tweets_and_dates = []
-    for pages in tweepy.Cursor(api.user_timeline,screen_name='pdxpolicelog').items(25):
+    for pages in tweepy.Cursor(api.user_timeline,screen_name='pdxpolicelog').items(10):
         #print(pages)
         tweets_and_dates.append(pages.text + ", " + str(pages.created_at))
         
