@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 import requests
 import urllib.parse
 import folium
+import sqlite3
 
 def update_df():
     dotenv.load_dotenv()
@@ -149,3 +150,24 @@ def add_markers_to_the_map(my_map, df, color, icon):
                                    popup=popup, 
                                    icon = folium.Icon(icon_size=(18, 24), color=color, icon=icon, prefix='fa')).add_to(my_map)
     return my_map
+
+def more_markers(my_map, df_pdx, color, icon):  
+    for i in range(0, len(df_pdx['coordinates'])):
+        df_pdx['newcoordinates'] = df_pdx['coordinates'].apply(lambda x: tuple(map(float, x.split(', '))))
+    points = list(zip(df_pdx.newcoordinates, df_pdx.category, df_pdx.address, df_pdx.dates))
+    for point in points:         
+            popup_text = "{}, {}, {}".format(point[1], str(point[2]), point[3])
+        
+            popup = folium.Popup(popup_text, autopan='False', parse_html=True, max_width=500)
+                
+            marker = folium.Marker(location=[point[0][1], point[0][0]], 
+                                   popup=popup, 
+                                   icon = folium.Icon(icon_size=(18, 24), color=color, icon=icon, prefix='fa')).add_to(my_map)
+    return my_map
+
+def initialize_df():
+    con = sqlite3.connect('pdx911.sqlite3')
+    c = con.cursor()
+    df_pdx = pd.read_sql_query("SELECT * FROM tweets", con)
+    
+    return(df_pdx)
